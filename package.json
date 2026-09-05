@@ -48,7 +48,8 @@
     "test": "npm run style-check && npm run build && npm run test:unit",
     "test:unit": "node --import tsx scripts/run-node-tests.ts test/unit",
     "test:integration": "node --import tsx scripts/run-node-tests.ts test/integration",
-    "ci:integration": "npm ci && npm run build && npm run test:integration"
+    "ci:integration": "npm ci && npm run build && npm run test:integration",
+    "test:unit:local": "node test/run-tests.js"
   },
   "dependencies": {
     "@winccoa-tools-pack/npm-winccoa-core": "^2.0.8"
