@@ -25,12 +25,26 @@ Or use `npx` when published:
 npx @winccoa-tools-pack/npm-winccoa-register-project --project-path . --runnable false
 ```
 
+Example registering a runnable project with languages:
+
+```powershell
+npx @winccoa-tools-pack/npm-winccoa-register-project --project-path C:\Projects\MyOaProject --runnable true --langs de_AT.utf8,en_US.utf8 --wincc-oa-version 3.20
+```
+
 ## Usage
 
 Common flows:
 
 - CI job: call the CLI to ensure a `config` file is present and the project is registered before running `WCCOActrl`.
 - Local testing: run the CLI to prepare a temporary runner directory for quick manual checks.
+
+CLI flags:
+
+- `--project-path <path>`: Full path to the WinCC OA project (required).
+- `--runnable [true|false]`: Whether to register a runnable project (default: `true`).
+- `--langs <csv|space-separated>`: Languages to configure for runnable projects (e.g. `de_AT.utf8,en_US.utf8`). Required when registering a runnable project for correct UI/catalog setup.
+- `--wincc-oa-version <version>`: Optional WinCC OA version (e.g. `3.20`). When omitted, the CLI will attempt to auto-detect if `@winccoa-tools-pack/npm-winccoa-core` is available and a single installation is present.
+- `--unregister`: Unregister the project from the environment instead of registering it.
 
 ## Exit codes
 
