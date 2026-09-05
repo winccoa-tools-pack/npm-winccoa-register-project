@@ -76,10 +76,10 @@ async function main() {
 
   // Try to use npm-winccoa-core for programmatic register/unregister
   try {
-      if (opts['no-core']) {
-        console.log('Skipping programmatic registration (no-core)')
-        return process.exit(0)
-      }
+    if (opts['no-core']) {
+      console.log('Skipping programmatic registration (no-core)')
+      return process.exit(0)
+    }
     const core = require('@winccoa-tools-pack/npm-winccoa-core')
     const ProjEnvProject = core && (core.ProjEnvProject || core.default && core.default.ProjEnvProject)
     if (!ProjEnvProject) {

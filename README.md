@@ -8,7 +8,7 @@ This repository provides a small Node.js CLI used in CI and local developer work
 - Attempt programmatic registration of the project via `@winccoa-tools-pack/npm-winccoa-core` when available.
 - Exit with meaningful codes so CI can treat `0` as success and non-zero as failure.
 
-See the `devTools/npm-winccoa-register` package for the CLI implementation.
+See `src/index.js` for the CLI implementation.
 
 ## Quick Start
 
@@ -42,8 +42,8 @@ CLI flags:
 
 - `--project-path <path>`: Full path to the WinCC OA project (required).
 - `--runnable [true|false]`: Whether to register a runnable project (default: `true`).
-- `--langs <csv|space-separated>`: Languages to configure for runnable projects (e.g. `de_AT.utf8,en_US.utf8`). Required when registering a runnable project for correct UI/catalog setup.
-- `--wincc-oa-version <version>`: Optional WinCC OA version (e.g. `3.20`). When omitted, the CLI will attempt to auto-detect if `@winccoa-tools-pack/npm-winccoa-core` is available and a single installation is present.
+- `--langs <csv|space-separated>`: Languages to configure for runnable projects (e.g. `de_AT.utf8,en_US.utf8`). Required when registering a runnable project.
+- `--wincc-oa-version <version>`: Optional WinCC OA version (e.g. `3.20`). When omitted, the CLI will attempt to auto-detect if `@winccoa-tools-pack/npm-winccoa-core` is available and a single WinCC OA installation is present.
 - `--unregister`: Unregister the project from the environment instead of registering it.
 
 ## Exit codes
