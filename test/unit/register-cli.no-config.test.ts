@@ -1,11 +1,10 @@
-const fs = require('fs')
-const path = require('path')
-const os = require('os')
-const child = require('child_process')
+import fs from 'fs'
+import path from 'path'
+import os from 'os'
+import { spawnSync } from 'child_process'
 
-function runCli(args) {
-  const res = child.spawnSync('node', [path.join(__dirname, '..', '..', 'devTools', 'npm-winccoa-register', 'index.js'), ...args], { encoding: 'utf8', env: process.env })
-  return res
+function runCli(args: string[]) {
+  return spawnSync('node', [path.join(__dirname, '..', '..', 'src', 'index.js'), ...args], { encoding: 'utf8', env: process.env })
 }
 
 function testNoConfigWhenNotRunnable() {
@@ -23,7 +22,7 @@ function testNoConfigWhenNotRunnable() {
 try {
   testNoConfigWhenNotRunnable()
   process.exit(0)
-} catch (err) {
+} catch (err: any) {
   console.error('FAIL:', err && err.message ? err.message : err)
   process.exit(2)
 }
