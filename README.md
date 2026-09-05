@@ -1,9 +1,3 @@
----
----
-Register WinCC OA projects and project configs (npm helper)
----
-
-
 # npm-winccoa-register-project
 
 Lightweight helper to write WinCC OA project config files and register a project programmatically.
@@ -38,7 +32,7 @@ Common flows:
 - CI job: call the CLI to ensure a `config` file is present and the project is registered before running `WCCOActrl`.
 - Local testing: run the CLI to prepare a temporary runner directory for quick manual checks.
 
-### Exit codes
+## Exit codes
 
 - `0` — Success (config written and registration attempted; WCCOActrl exit code should be used for final test outcome).
 - Non-zero — Failure (see CLI stderr for details).
@@ -46,12 +40,10 @@ Common flows:
 ## Developer notes
 
 - The CLI prefers programmatic registration via `@winccoa-tools-pack/npm-winccoa-core` when present in `node_modules`.
-- If the core package is not available, the CLI will still write the runner `config` file so `WCCOActrl` can be started by CI.
+- If the core package is not available, the CLI will still write the project `config` file so `WCCOActrl` can be started by CI.
 
 ## Contributing
 
 Small, focused contributions welcome. Open issues describing the desired behavior and include reproduction steps.
-
----
 
 Made with ❤️ for and by the WinCC OA community
