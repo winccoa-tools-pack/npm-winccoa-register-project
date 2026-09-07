@@ -13,8 +13,14 @@ function parseArgs(argv: string[]): Opts {
     const args = argv.slice(2);
     for (let i = 0; i < args.length; i++) {
         const a = args[i];
-        if (a === '-h' || a === '--help') { opts.help = true; continue }
-        if (a === '--no-register') { opts['no-register'] = true; continue }
+        if (a === '-h' || a === '--help') {
+            opts.help = true;
+            continue;
+        }
+        if (a === '--no-register') {
+            opts['no-register'] = true;
+            continue;
+        }
         if (a === '--unregister') {
             opts.unregister = true;
             continue;
@@ -48,9 +54,13 @@ function usage(): void {
     console.log('  --unregister                 Unregister the project instead of registering');
     console.log('  -h, --help                   Show this help message');
     console.log('\nExamples:');
-    console.log('  winccoa-pa-register --project-path C:\\projects\\MyProj --runnable true --langs en_US.utf8 --wincc-oa-version 3.20');
+    console.log(
+        '  winccoa-pa-register --project-path C:\\projects\\MyProj --runnable true --langs en_US.utf8 --wincc-oa-version 3.20',
+    );
     console.log('  winccoa-pa-register --project-path /opt/projects/MyProj --unregister');
-        console.log('\nNote: The `--no-register` flag is provided for testing only; it skips programmatic register/unregister actions. Do not use in production workflows.');
+    console.log(
+        '\nNote: The `--no-register` flag is provided for testing only; it skips programmatic register/unregister actions. Do not use in production workflows.',
+    );
 }
 
 export async function main(): Promise<void> {
@@ -79,7 +89,9 @@ export async function main(): Promise<void> {
         try {
             // Try to read the installed core package version
             // eslint-disable-next-line @typescript-eslint/no-var-requires
-            const corePkg = require('@winccoa-tools-pack/npm-winccoa-core/package.json') as { version?: string };
+            const corePkg = require('@winccoa-tools-pack/npm-winccoa-core/package.json') as {
+                version?: string;
+            };
             return corePkg.version || undefined;
         } catch (e) {
             return undefined;
@@ -87,18 +99,25 @@ export async function main(): Promise<void> {
     })();
 
     if (!installedCoreVersion) {
-        console.warn('Warning: Could not determine installed version of npm-winccoa-core; programmatic registration may fail');
+        console.warn(
+            'Warning: Could not determine installed version of npm-winccoa-core; programmatic registration may fail',
+        );
     }
 
-    const winccVersion = (opts['wincc-oa-version'] || opts.wincc || installedCoreVersion) as string | undefined;
+    const winccVersion = (opts['wincc-oa-version'] || opts.wincc || installedCoreVersion) as
+        string | undefined;
 
     if (runnable && !winccVersion) {
-        console.warn('Warning: --wincc-oa-version not provided and could not determine installed version of npm-winccoa-core; programmatic registration may fail');
+        console.warn(
+            'Warning: --wincc-oa-version not provided and could not determine installed version of npm-winccoa-core; programmatic registration may fail',
+        );
     }
 
     const oaPath = (() => {
         try {
-            return winccVersion ? getWinCCOAInstallationPathByVersion(winccVersion as string) : undefined;
+            return winccVersion
+                ? getWinCCOAInstallationPathByVersion(winccVersion as string)
+                : undefined;
         } catch (e) {
             return undefined;
         }
@@ -119,8 +138,8 @@ export async function main(): Promise<void> {
 
         if (unregister) {
             if (opts['no-register']) {
-                console.log('Skipping unregister due to --no-register')
-                process.exit(0)
+                console.log('Skipping unregister due to --no-register');
+                process.exit(0);
             }
             const rc = await project.unregisterProj();
             if (rc == 0) {
@@ -168,44 +187,68 @@ export async function main(): Promise<void> {
                     console.log('Config already exists:', cfgPath);
                 }
                 if (opts['no-register']) {
-                    console.log('Skipping programmatic registration due to --no-register')
-                    process.exit(0)
+                    console.log('Skipping programmatic registration due to --no-register');
+                    process.exit(0);
                 }
             }
 
             try {
                 if (typeof project.registerProj === 'function') {
-                    console.log('Attempting programmatic registration via npm-winccoa-core')
-                    const regPromise = project.registerProj()
+                    console.log('Attempting programmatic registration via npm-winccoa-core');
+                    const regPromise = project.registerProj();
                     try {
-                        await Promise.race([regPromise, new Promise((_, rej) => setTimeout(() => rej(new Error('register timeout')), 15000))])
+                        await Promise.race([
+                            regPromise,
+                            new Promise((_, rej) =>
+                                setTimeout(() => rej(new Error('register timeout')), 15000),
+                            ),
+                        ]);
                     } catch (err: any) {
-                        console.warn('project.register failed or timed out:', err && err.message ? err.message : err)
+                        console.warn(
+                            'project.register failed or timed out:',
+                            err && err.message ? err.message : err,
+                        );
                     }
 
                     // Wait briefly for registration to appear (non-fatal)
-                    const waitMs = 30000
-                    const intervalMs = 500
-                    const start = Date.now()
-                    let registered = (typeof project.isRegistered === 'function') ? project.isRegistered() : false
-                    while (!registered && (Date.now() - start) < waitMs) {
+                    const waitMs = 30000;
+                    const intervalMs = 500;
+                    const start = Date.now();
+                    let registered =
+                        typeof project.isRegistered === 'function' ? project.isRegistered() : false;
+                    while (!registered && Date.now() - start < waitMs) {
                         // eslint-disable-next-line no-await-in-loop
-                        await new Promise(r => setTimeout(r, intervalMs))
-                        try { registered = typeof project.isRegistered === 'function' ? project.isRegistered() : false } catch (e) { registered = false }
+                        await new Promise((r) => setTimeout(r, intervalMs));
+                        try {
+                            registered =
+                                typeof project.isRegistered === 'function'
+                                    ? project.isRegistered()
+                                    : false;
+                        } catch (e) {
+                            registered = false;
+                        }
                     }
 
                     if (registered) {
-                        console.log('Project successfully registered:', path.basename(absProjectPath))
-                        process.exit(0)
+                        console.log(
+                            'Project successfully registered:',
+                            path.basename(absProjectPath),
+                        );
+                        process.exit(0);
                     } else {
-                        console.warn('Registration did not complete within timeout; config was written')
+                        console.warn(
+                            'Registration did not complete within timeout; config was written',
+                        );
                         // Do not treat this as an error; exit 0 so callers that only need config succeed
-                        process.exit(0)
+                        process.exit(0);
                     }
                 }
             } catch (err: any) {
-                console.warn('Could not perform programmatic registration:', err && err.message ? err.message : err)
-                process.exit(0)
+                console.warn(
+                    'Could not perform programmatic registration:',
+                    err && err.message ? err.message : err,
+                );
+                process.exit(0);
             }
         }
 
