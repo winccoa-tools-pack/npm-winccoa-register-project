@@ -1,4 +1,4 @@
-# Changelog
+# Changelog — winccoa-pa-register
 
 All notable changes to this project will be documented in this file.
 
@@ -10,4 +10,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Initial repository created (template content cleaned). Maintain changelog per release.
-

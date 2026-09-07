@@ -1,5 +1,0 @@
-[general]
-pvss_path = "C:/Siemens/Automation/WinCC_OA/3.20"
-proj_path = "C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures/projects/runnable"
-proj_version = "3.20"
-langs = "en_US.utf8"

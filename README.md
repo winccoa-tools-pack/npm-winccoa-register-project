@@ -1,4 +1,12 @@
-# npm-winccoa-register-project
+# npm-winccoa-register-project — winccoa-pa-register
+
+## CLI usage
+
+- **Compile:** `npm run compile`
+- **Run (example):** `winccoa-pa-register --project-path ./my-project --runnable true --langs en_US.utf8 --wincc-oa-version 3.21`
+- **Testing:** include `--no-register` to skip system registration (test-only).
+
+You can also run the CLI without linking via `npx winccoa-pa-register --help`.
 
 Lightweight helper to write WinCC OA project config files and register a project programmatically.
 

@@ -1,4 +1,10 @@
-# CI + Integration (WinCC OA)
+# CI + Integration (WinCC OA) — winccoa-pa-register
+
+## CLI usage (CI)
+
+- **Compile step:** `npm run compile` (must produce `dist/` before invoking the CLI)
+- **Example invocation:** `winccoa-pa-register --project-path <path> --runnable true --langs en_US.utf8 --wincc-oa-version 3.21`
+- **CI tests:** integration jobs that run on WinCC OA hosts should NOT include `--no-register`; unit jobs should include `--no-register` to stay isolated.
 
 This repository runs a standard Node/TypeScript CI pipeline on GitHub-hosted runners and (optionally) runs integration tests inside a WinCC OA Docker container.
 
