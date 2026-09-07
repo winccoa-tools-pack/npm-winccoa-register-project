@@ -4,13 +4,13 @@ import os from 'os'
 import { spawnSync } from 'child_process'
 
 function runCli(args: string[], env?: NodeJS.ProcessEnv) {
-  return spawnSync('node', [path.join(__dirname, '..', '..', 'src', 'index.js'), ...args], { encoding: 'utf8', env: Object.assign({}, process.env, env || {}) })
+  return spawnSync('node', [path.join(process.cwd(), 'dist', 'src', 'index.js'), ...args], { encoding: 'utf8', env: Object.assign({}, process.env, env || {}) })
 }
 
 function testWriteConfig() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'regtest-'))
   const projectPath = tmp
-  const res = runCli(['--project-path', projectPath, '--runnable', 'true', '--langs', 'en_US.utf8', '--no-core'])
+  const res = runCli(['--project-path', projectPath, '--runnable', 'true', '--langs', 'en_US.utf8'])
   if (res.error) throw res.error
   if (res.status !== 0) throw new Error('CLI exited with non-zero: ' + res.status + '\n' + res.stderr)
   const cfg = path.join(projectPath, 'config', 'config')
