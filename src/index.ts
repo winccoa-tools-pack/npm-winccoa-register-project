@@ -88,7 +88,7 @@ export async function main(): Promise<void> {
     const installedCoreVersion = (() => {
         try {
             // Try to read the installed core package version
-            // eslint-disable-next-line @typescript-eslint/no-var-requires
+
             const corePkg = require('@winccoa-tools-pack/npm-winccoa-core/package.json') as {
                 version?: string;
             };
@@ -217,7 +217,7 @@ export async function main(): Promise<void> {
                     let registered =
                         typeof project.isRegistered === 'function' ? project.isRegistered() : false;
                     while (!registered && Date.now() - start < waitMs) {
-                        // eslint-disable-next-line no-await-in-loop
+
                         await new Promise((r) => setTimeout(r, intervalMs));
                         try {
                             registered =
