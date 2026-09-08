@@ -39,8 +39,8 @@ Key points:
 - **Local integration testing:** For full end-to-end validation (WinCC OA
   host, panels, and GUI interactions), run integration tests locally using a
   supported WinCC OA installation or a provided local integration harness.
-- **Docker image:** The repository no longer relies on a WinCC OA Docker image;
-  any previous `WINCCOA_IMAGE` configuration can be considered obsolete.
+- **Docker image:** This repository does not use a WinCC OA Docker image in CI
+  and there is no `WINCCOA_IMAGE` configuration.
 
 If you need help running integration tests locally, consult the core package's
 README or ask for a short runbook describing a minimal local integration setup.
