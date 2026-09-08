@@ -10,7 +10,7 @@ function runCli(args: string[], env?: NodeJS.ProcessEnv) {
 function testWriteConfig() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'regtest-'))
   const projectPath = tmp
-  const res = runCli(['--project-path', projectPath, '--runnable', 'true', '--langs', 'en_US.utf8', '--simulation-rc', '0', '--wincc-oa-version', '3.21'])
+  const res = runCli(['--project-path', projectPath, '--runnable', 'true', '--langs', 'en_US.utf8', '--simulation-rc', '0', '--simulated-winccoa-versions', '3.21'])
   if (res.error) throw res.error
   if (res.status !== 0) throw new Error('CLI exited with non-zero: ' + res.status + '\n' + res.stderr)
   const cfg = path.join(projectPath, 'config', 'config')
