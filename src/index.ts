@@ -72,6 +72,14 @@ export async function main(): Promise<void> {
         process.exit(1);
     }
 
+    let sim: number | undefined;
+    if (opts['simulation-rc'] !== undefined) {
+        sim = Number(opts['simulation-rc']);
+        console.warn(
+            `Warning: Using --simulation-rc=${isNaN(sim) ? String(opts['simulation-rc']) : sim}; simulating register/unregister return code. This is for testing only and should not be used in production workflows.`,
+        );
+    }
+
     const runnable = opts.runnable === undefined ? true : String(opts.runnable) !== 'false';
     const unregister = !!opts.unregister;
     const langsRaw = (opts.langs || opts.lang || '') as string;
@@ -82,7 +90,8 @@ export async function main(): Promise<void> {
             .filter(Boolean)
         : [];
 
-    const installedWinCCOAVersions = getAvailableWinCCOAVersions();
+    const simVersionsRaw = (opts['simulated-winccoa-versions'] || '') as string;
+    const installedWinCCOAVersions = opts['simulated-winccoa-versions'] !== undefined ? simVersionsRaw.split(',') : getAvailableWinCCOAVersions();
 
     console.log('Project path:', projectPath);
     console.log('Runnable:', runnable);
@@ -122,14 +131,6 @@ export async function main(): Promise<void> {
     const absProjectPath = path.resolve(projectPath);
     if (!fs.existsSync(absProjectPath)) {
         throw new Error(`Project path does not exist: ${absProjectPath}`);
-    }
-
-    let sim: number | undefined;
-    if (opts['simulation-rc'] !== undefined) {
-        sim = Number(opts['simulation-rc']);
-        console.warn(
-            `Warning: Using --simulation-rc=${isNaN(sim) ? String(opts['simulation-rc']) : sim}; simulating register/unregister return code. This is for testing only and should not be used in production workflows.`,
-        );
     }
 
     const project: any = new ProjEnvProject();

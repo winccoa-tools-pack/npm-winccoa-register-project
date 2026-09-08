@@ -41,6 +41,16 @@ Notes:
 - Use `--simulation-rc=0` in local/unit-test runs to avoid attempting to register or unregister WinCC OA projects on your machine and simulate success.
 - For CI that runs on real WinCC OA hosts, do not include `--simulation-rc` so programmatic registration executes.
 
+### Re-run coverage locally
+
+To collect coverage locally run:
+
+```bash
+npx c8 --reporter=text --reporter=lcov node --import tsx scripts/run-node-tests.ts test/unit
+```
+
+Accept the `c8` install prompt if asked. The command produces a text summary and `coverage/lcov.info`.
+
 Lightweight helper to write WinCC OA project config files and register a project programmatically.
 
 This repository provides a small Node.js CLI used in CI and local developer workflows to:
