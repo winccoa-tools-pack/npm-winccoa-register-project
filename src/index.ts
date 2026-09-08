@@ -76,7 +76,7 @@ export async function main(): Promise<void> {
     if (opts['simulation-rc'] !== undefined) {
         sim = Number(opts['simulation-rc']);
         console.warn(
-            `Warning: Using --simulation-rc=${isNaN(sim) ? String(opts['simulation-rc']) : sim}; simulating register/unregister return code. This is for testing only and should not be used in production workflows.`,
+            `Warning: Using --simulation-rc ${isNaN(sim) ? String(opts['simulation-rc']) : sim}; simulating register/unregister return code. This is for testing only and should not be used in production workflows.`,
         );
     }
 
@@ -91,6 +91,12 @@ export async function main(): Promise<void> {
         : [];
 
     const simVersionsRaw = (opts['simulated-winccoa-versions'] || '') as string;
+    if (opts['simulated-winccoa-versions'] !== undefined) {
+        console.warn(
+            `Warning: Using --simulated-winccoa-versions ${simVersionsRaw}; simulating installed WinCC OA versions. This is for testing only and should not be used in production workflows.`,
+        );
+    }
+
     const installedWinCCOAVersions =
         opts['simulated-winccoa-versions'] !== undefined
             ? simVersionsRaw.split(',')
