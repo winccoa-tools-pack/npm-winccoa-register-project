@@ -9,12 +9,12 @@
 Advanced testing flags:
 
 - `--simulated-winccoa-versions <csv>`: provide a comma-separated list of installed WinCC OA
-	versions to simulate host detection (example: `3.20,3.21`).
+  versions to simulate host detection (example: `3.20,3.21`).
 
-	Use this flag when running tests or CI on machines that do not have WinCC OA
-	installed. When `--simulated-winccoa-versions` is provided together with
-	`--simulation-rc`, the CLI uses the simulated versions list instead of
-	probing the local host for installed WinCC OA versions.
+  Use this flag when running tests or CI on machines that do not have WinCC OA
+  installed. When `--simulated-winccoa-versions` is provided together with
+  `--simulation-rc`, the CLI uses the simulated versions list instead of
+  probing the local host for installed WinCC OA versions.
 
 Examples:
 
