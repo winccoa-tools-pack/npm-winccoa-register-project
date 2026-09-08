@@ -175,7 +175,7 @@ jobs:
                 out['selected_actions'] = {'apps': ap['selected_actions']['apps']}
               json.dump(out, open('actions_payload.json','w'), ensure_ascii=False)
               print('WROTE actions_payload.json')
-PY
+              PY
 
             if [ -f actions_payload.json ]; then
               echo "Current Actions permissions for $OWNER/$NAME:" || true
