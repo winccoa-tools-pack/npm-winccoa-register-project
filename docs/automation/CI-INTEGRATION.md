@@ -23,63 +23,32 @@ Workflow: `.github/workflows/ci-cd.yml`
   - `npm run format:check`
   - matrix tests via `npm run test:unit`
 
-### Integration Tests - WinCC OA
+### Integration testing policy
 
-IMPORTANT: The heavy `integration-winccoa` job that ran WinCC OA inside a
-Docker container has been removed from the repository CI workflow. Registration
-and unregistration behavior is now validated in the core package
-`@winccoa-tools-pack/npm-winccoa-core`. Use local/manual runs for full
-integration verification (see "Manual runs" below).
+Integration tests that exercise a full WinCC OA installation are not executed
+in this repository's CI pipeline. The previous Docker-based `integration-winccoa`
+job and the associated repository Docker image are obsolete and have been
+removed.
 
-Integration tests are part of the CI/CD workflow when run manually or locally.
+Key points:
 
-Workflow: `.github/workflows/ci-cd.yml` (previously: job `Integration Tests - WinCC OA`)
+- **Where to validate registration/unregistration:** Functional checks for
+  registration/unregistration are implemented and validated in the core package
+  `@winccoa-tools-pack/npm-winccoa-core` — prefer that package's test harness
+  for automated verification.
+- **Local integration testing:** For full end-to-end validation (WinCC OA
+  host, panels, and GUI interactions), run integration tests locally using a
+  supported WinCC OA installation or a provided local integration harness.
+- **Docker image:** The repository no longer relies on a WinCC OA Docker image;
+  any previous `WINCCOA_IMAGE` configuration can be considered obsolete.
 
-- Triggers:
-  - same triggers as `CI/CD Pipeline`
-- What it does:
-  - pulls a WinCC OA Docker image
-  - runs the repo inside the container
-  - executes `npm run ci:integration` (which runs `npm ci`, `npm run build`, and `npm run test:integration`)
-
-By default, the integration job is a no-op unless an image is configured.
-
-## Docker image selection
-
-The integration workflow determines the image like this:
-
-1. If `package.json` defines `config.winccoaImage`, that value is used.
-2. If repository variable `WINCCOA_IMAGE` is set, it overrides the package.json value.
-
-If you publish your own WinCC OA image, set it explicitly in `package.json` to avoid surprises.
-
-## Required secrets (optional)
-
-These are used only for private pulls from Docker Hub:
-
-- `DOCKER_USER`
-- `DOCKER_PASSWORD`
-
-If you reference a public image, the workflow can work without credentials.
-
-## Enabling integration in a new repo
-
-Set one of the following:
-
-- `package.json` → `config.winccoaImage`
-- Repository variable `WINCCOA_IMAGE`
-
-## Manual runs (recommended for first setup)
-
-From the Actions tab:
-
-1. Run **CI/CD Pipeline** once to validate the build.
-2. Run **Integration Tests - WinCC OA** via `Run workflow`.
+If you need help running integration tests locally, consult the core package's
+README or ask for a short runbook describing a minimal local integration setup.
 
 ## Troubleshooting
 
 - `npm ci` fails: ensure `package-lock.json` matches `package.json` and commit the updated lockfile.
-- Container pull fails: verify your image name (and Docker credentials if private).
+- Local integration container or host issues: run the integration tooling locally and capture logs for diagnosis.
 
 ---
 
