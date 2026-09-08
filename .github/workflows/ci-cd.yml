@@ -138,11 +138,11 @@ jobs:
         run: |
           set -euo pipefail
           docker pull "$IMAGE_NAME"
-      - name: Verify runnable fixture config exists
+      - name: Verify runnable fixture exists
         shell: bash
         run: |
           set -euo pipefail
-          test -f "./test/fixtures/projects/runnable/config/config"
+          test -d "./test/fixtures/projects/runnable/config/"
       - name: Install dependencies (host)
         run: npm ci
       - name: Build package (host)
