@@ -6,6 +6,24 @@
 - **Run (example):** `winccoa-pa-register --project-path ./my-project --runnable true --langs en_US.utf8 --wincc-oa-version 3.21`
 - **Testing:** include `--simulation-rc=0` to simulate a successful register/unregister return code (integer). Use other integers to simulate failure codes.
 
+Advanced testing flags:
+
+- `--simulated-winccoa-versions <csv>`: provide a comma-separated list of installed WinCC OA versions to simulate host detection (example: `3.20,3.21`). This is useful in CI or when running unit tests on developer machines that don't have WinCC OA installed. When present together with `--simulation-rc`, the CLI will use the simulated installed versions list instead of probing the host.
+
+Examples:
+
+- Simulate a host with a single WinCC OA 3.21 installation and a successful register call:
+
+```bash
+node dist/cjs/index.js --project-path ./my-project --runnable true --langs en_US.utf8 --simulation-rc 0 --simulated-winccoa-versions 3.21
+```
+
+- Simulate a host with two installed versions (to exercise ambiguous-version behavior) without performing a real register:
+
+```bash
+node dist/cjs/index.js --project-path ./my-project --runnable true --langs en_US.utf8 --simulation-rc 0 --simulated-winccoa-versions 3.20,3.21
+```
+
 You can also run the CLI without linking via `npx winccoa-pa-register --help`.
 
 ## Testing changes locally

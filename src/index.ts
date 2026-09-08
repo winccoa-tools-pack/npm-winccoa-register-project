@@ -132,7 +132,10 @@ export async function main(): Promise<void> {
         console.log('Using WinCC OA version:', winccVersion || '(none)');
     }
 
-    const oaPath = opts['simulated-winccoa-versions'] !== undefined ? `/opt/WinCC_OA/${winccVersion}` : getWinCCOAInstallationPathByVersion(winccVersion ?? '');
+    const oaPath =
+        opts['simulated-winccoa-versions'] !== undefined
+            ? `/opt/WinCC_OA/${winccVersion}`
+            : getWinCCOAInstallationPathByVersion(winccVersion ?? '');
 
     if (!oaPath) {
         throw new Error(

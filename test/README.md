@@ -4,6 +4,7 @@
 
 - **Compile before running tests:** `npm run compile`
 -- **Run CLI in tests:** use `--simulation-rc 0` to simulate a successful register/unregister return code and avoid touching the system.
+-- **Simulate installed WinCC OA versions:** pass `--simulated-winccoa-versions 3.21` (comma-separated) to emulate host-installed versions when running tests. Combine with `--simulation-rc` to fully simulate registration behavior without requiring WinCC OA on the test host.
 
 This directory contains unit tests and integration tests for the WinCC OA Core Library.
 
