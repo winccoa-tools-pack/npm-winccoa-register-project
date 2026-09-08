@@ -10,7 +10,7 @@ function runCli(args: string[]) {
 function testSimulatedFailureLeavesConfig() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'regtest-'))
   const projectPath = tmp
-  const res = runCli(['--project-path', projectPath, '--runnable', 'true', '--langs', 'en_US.utf8', '--wincc-oa-version', '3.21', '--simulation-rc=5', 'simulated-winccoa-versions=3.20,3.21'])
+  const res = runCli(['--project-path', projectPath, '--runnable', 'true', '--langs', 'en_US.utf8', '--wincc-oa-version', '3.21', '--simulation-rc', '5', '--simulated-winccoa-versions', '3.20,3.21'])
   if (res.error) throw res.error
   if (res.status === 0) throw new Error('Expected non-zero exit when simulation-rc=5')
   const cfg = path.join(projectPath, 'config', 'config')
