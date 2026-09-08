@@ -1,4 +1,4 @@
-# Contributing
+# Contributing — winccoa-pa-register
 
 Thank you for contributing to this NPM package.
 

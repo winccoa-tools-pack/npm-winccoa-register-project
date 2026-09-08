@@ -1,4 +1,10 @@
-# Source Code
+# Source Code — winccoa-pa-register
+
+## CLI usage
+
+- **Compile:** `npm run compile`
+- **Run (example):** `winccoa-pa-register --project-path ./my-project --runnable true --langs en_US.utf8 --wincc-oa-version 3.21`
+-- **Testing:** `--simulation-rc=0` simulates a successful register/unregister return code for unit tests.
 
 This directory contains the core WinCC OA functionality and utilities.
 

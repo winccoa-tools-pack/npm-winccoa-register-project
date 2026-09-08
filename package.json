@@ -1,7 +1,7 @@
 {
   "name": "@winccoa-tools-pack/npm-winccoa-register-project",
   "version": "0.0.1",
-  "description": "CLI to create WinCC OA project runner config and register projects",
+  "description": "CLI to create WinCC OA project config file and (un)register projects",
   "author": "winccoa-tools-pack",
   "license": "MIT",
   "main": "dist/cjs/index.js",
@@ -25,7 +25,7 @@
     }
   },
   "bin": {
-    "winccoa-pnl-xml": "./dist/cjs/cli.js"
+    "npm-winccoa-register": "src/index.js"
   },
   "files": [
     "dist"
@@ -48,7 +48,8 @@
     "test": "npm run style-check && npm run build && npm run test:unit",
     "test:unit": "node --import tsx scripts/run-node-tests.ts test/unit",
     "test:integration": "node --import tsx scripts/run-node-tests.ts test/integration",
-    "ci:integration": "npm ci && npm run build && npm run test:integration"
+    "ci:integration": "npm ci && npm run build && npm run test:integration",
+    "test:unit:local": "node test/run-tests.js"
   },
   "dependencies": {
     "@winccoa-tools-pack/npm-winccoa-core": "^2.0.8"
@@ -67,9 +68,6 @@
     "tsx": "^4.23.13",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.68.0"
-  },
-  "config": {
-    "winccoaImage": "mpokornyetm/winccoa-tools-pack-npm-winccoa-core:npm-winccoa-core"
   },
   "engines": {
     "node": ">=20"
