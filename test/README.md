@@ -3,7 +3,7 @@
 ## CLI usage (tests)
 
 - **Compile before running tests:** `npm run compile`
-- **Run CLI in tests:** use `--no-register` to avoid registering projects on the local machine.
+-- **Run CLI in tests:** use `--simulation-rc=0` to simulate a successful register/unregister return code and avoid touching the system.
 
 This directory contains unit tests and integration tests for the WinCC OA Core Library.
 

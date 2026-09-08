@@ -4,9 +4,42 @@
 
 - **Compile:** `npm run compile`
 - **Run (example):** `winccoa-pa-register --project-path ./my-project --runnable true --langs en_US.utf8 --wincc-oa-version 3.21`
-- **Testing:** include `--no-register` to skip system registration (test-only).
+- **Testing:** include `--simulation-rc=0` to simulate a successful register/unregister return code (integer). Use other integers to simulate failure codes.
 
 You can also run the CLI without linking via `npx winccoa-pa-register --help`.
+
+## Testing changes locally
+
+Follow these steps to test changes on your machine. These examples assume you're in the repository root.
+
+- Install dependencies and build:
+
+```bash
+npm ci
+npm run compile
+```
+
+- Run unit tests (compile-first):
+
+```bash
+npm run test:unit
+```
+
+- Run the compiled CLI (recommended for tests) against the included runnable fixture without registering to the system:
+
+```bash
+node dist/src/cli.js --project-path test/fixtures/projects/runnable --runnable true --langs en_US.utf8 --wincc-oa-version 3.21 --simulation-rc=0
+```
+
+- See CLI help (compiled):
+
+```bash
+node dist/src/cli.js --help
+```
+
+Notes:
+- Use `--simulation-rc=0` in local/unit-test runs to avoid attempting to register or unregister WinCC OA projects on your machine and simulate success.
+- For CI that runs on real WinCC OA hosts, do not include `--simulation-rc` so programmatic registration executes.
 
 Lightweight helper to write WinCC OA project config files and register a project programmatically.
 

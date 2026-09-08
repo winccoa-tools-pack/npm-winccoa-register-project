@@ -10,7 +10,7 @@ function runCli(args: string[]) {
 function testNoConfigWhenNotRunnable() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'regtest-'))
   const projectPath = tmp
-  const res = runCli(['--project-path', projectPath, '--runnable', 'false', '--no-register'])
+  const res = runCli(['--project-path', projectPath, '--runnable', 'false', '--simulation-rc=0'])
   if (res.error) throw res.error
   if (res.status !== 0) throw new Error('CLI exited with non-zero: ' + res.status + '\n' + res.stderr)
   const cfg = path.join(projectPath, 'config', 'config')
