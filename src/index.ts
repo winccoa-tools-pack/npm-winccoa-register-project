@@ -8,6 +8,49 @@ import {
 
 type Opts = Record<string, string | boolean>;
 
+class ProjEnvProjectMock {
+    private _dir: string = '';
+    private _version: string = '';
+    private _runnable: boolean = true;
+    private _langs: string[] = [];
+
+    setDir(dir: string): void {
+        this._dir = dir;
+    }
+
+    setVersion(version: string): void {
+        this._version = version;
+    }
+
+    setRunnable(runnable: boolean): void {
+        this._runnable = runnable;
+    }
+
+    setLanguages(langs: string[]): void {
+        this._langs = langs;
+    }
+
+    async registerProj(): Promise<number> {
+        console.log('Mock registerProj called with:', {
+            dir: this._dir,
+            version: this._version,
+            runnable: this._runnable,
+            langs: this._langs,
+        });
+        return 0; // Simulate successful registration
+    }
+
+    async unregisterProj(): Promise<number> {
+        console.log('Mock unregisterProj called with:', {
+            dir: this._dir,
+            version: this._version,
+            runnable: this._runnable,
+            langs: this._langs,
+        });
+        return 0; // Simulate successful unregistration
+    }
+}
+
 function parseArgs(argv: string[]): Opts {
     const opts: Opts = {};
     const args = argv.slice(2);
@@ -148,7 +191,10 @@ export async function main(): Promise<void> {
         throw new Error(`Project path does not exist: ${absProjectPath}`);
     }
 
-    const project: any = new ProjEnvProject();
+    const project: any =
+        opts['simulated-winccoa-versions'] !== undefined
+            ? new ProjEnvProjectMock()
+            : new ProjEnvProject();
     project.setDir(absProjectPath);
     if (winccVersion) project.setVersion(winccVersion);
     project.setRunnable(!!runnable);
