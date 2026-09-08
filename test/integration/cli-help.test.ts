@@ -27,8 +27,9 @@ test('CLI: "--help" prints usage and exits with code 1', () => {
     });
     _lastSpawnResult = result;
 
-    assert.equal(result.status, 1);
-    assert.match(result.stderr ?? '', /Usage: winccoa-pa-register/);
+    // Help should exit 0 and print usage to stdout
+    assert.equal(result.status, 0);
+    assert.match(result.stdout ?? '', /Usage: winccoa-pa-register/);
 });
 
 test.after(() => {
