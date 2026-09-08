@@ -118,7 +118,7 @@ jobs:
           )
           echo "Job results:"
           printf ' - %s
-' "${RESULTS[@]}"
+          ' "${RESULTS[@]}"
           FAIL=0
           for r in "${RESULTS[@]}"; do
             status="${r#*:}"
