@@ -17,7 +17,7 @@ function parseArgs(argv: string[]): Opts {
             opts.help = true;
             continue;
         }
-        
+
         if (a === '--unregister') {
             opts.unregister = true;
             continue;
@@ -85,13 +85,16 @@ export async function main(): Promise<void> {
     const langsRaw = (opts.langs || opts.lang || '') as string;
     const langs = langsRaw
         ? langsRaw
-            .split(/[ ,]+/)
-            .map((s) => s.trim())
-            .filter(Boolean)
+              .split(/[ ,]+/)
+              .map((s) => s.trim())
+              .filter(Boolean)
         : [];
 
     const simVersionsRaw = (opts['simulated-winccoa-versions'] || '') as string;
-    const installedWinCCOAVersions = opts['simulated-winccoa-versions'] !== undefined ? simVersionsRaw.split(',') : getAvailableWinCCOAVersions();
+    const installedWinCCOAVersions =
+        opts['simulated-winccoa-versions'] !== undefined
+            ? simVersionsRaw.split(',')
+            : getAvailableWinCCOAVersions();
 
     console.log('Project path:', projectPath);
     console.log('Runnable:', runnable);
@@ -100,11 +103,12 @@ export async function main(): Promise<void> {
     console.log('WinCC OA version:', opts['wincc-oa-version'] || '(not specified)');
     console.log('Available WinCC OA versions:', installedWinCCOAVersions.join(', ') || '(none)');
     if (installedWinCCOAVersions.length === 0) {
-        throw new Error('Could not determine installed version of WinCC OA; programmatic registration may fail');
+        throw new Error(
+            'Could not determine installed version of WinCC OA; programmatic registration may fail',
+        );
     }
 
-    let winccVersion = opts['wincc-oa-version'] as
-        string | undefined;
+    let winccVersion = opts['wincc-oa-version'] as string | undefined;
 
     if (!winccVersion) {
         if (installedWinCCOAVersions.length > 1) {
@@ -125,7 +129,9 @@ export async function main(): Promise<void> {
     const oaPath = getWinCCOAInstallationPathByVersion(winccVersion ?? '');
 
     if (!oaPath) {
-        throw new Error(`Could not determine installation path for WinCC OA version: ${winccVersion ?? '(none)'}`);
+        throw new Error(
+            `Could not determine installation path for WinCC OA version: ${winccVersion ?? '(none)'}`,
+        );
     }
 
     const absProjectPath = path.resolve(projectPath);
@@ -140,7 +146,6 @@ export async function main(): Promise<void> {
     project.setLanguages(langs);
 
     if (unregister) {
-
         let rc: number;
         if (sim !== undefined) {
             rc = sim;
@@ -151,11 +156,15 @@ export async function main(): Promise<void> {
             console.log('Project successfully unregistered:', path.basename(absProjectPath));
             process.exit(0);
         } else {
-            throw new Error(`Project was not registered or could not be unregistered: ${path.basename(absProjectPath)}`);
+            throw new Error(
+                `Project was not registered or could not be unregistered: ${path.basename(absProjectPath)}`,
+            );
         }
     } else {
         if (runnable && langs.length === 0) {
-            throw new Error('--langs was not provided. It is recommended when registering a runnable project.');
+            throw new Error(
+                '--langs was not provided. It is recommended when registering a runnable project.',
+            );
         }
         if (runnable) {
             const cfgDir = path.join(absProjectPath, 'config');

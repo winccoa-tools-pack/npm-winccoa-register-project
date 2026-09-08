@@ -38,6 +38,7 @@ node dist/src/cli.js --help
 ```
 
 Notes:
+
 - Use `--simulation-rc=0` in local/unit-test runs to avoid attempting to register or unregister WinCC OA projects on your machine and simulate success.
 - For CI that runs on real WinCC OA hosts, do not include `--simulation-rc` so programmatic registration executes.
 
