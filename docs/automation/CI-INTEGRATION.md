@@ -26,9 +26,7 @@ Workflow: `.github/workflows/ci-cd.yml`
 ### Integration testing policy
 
 Integration tests that exercise a full WinCC OA installation are not executed
-in this repository's CI pipeline. The previous Docker-based `integration-winccoa`
-job and the associated repository Docker image are obsolete and have been
-removed.
+in this repository's CI pipeline.
 
 Key points:
 
@@ -39,8 +37,6 @@ Key points:
 - **Local integration testing:** For full end-to-end validation (WinCC OA
   host, panels, and GUI interactions), run integration tests locally using a
   supported WinCC OA installation or a provided local integration harness.
-- **Docker image:** This repository does not use a WinCC OA Docker image in CI
-  and there is no `WINCCOA_IMAGE` configuration.
 
 If you need help running integration tests locally, consult the core package's
 README or ask for a short runbook describing a minimal local integration setup.

@@ -69,9 +69,6 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.68.0"
   },
-  "config": {
-    "winccoaImage": "mpokornyetm/winccoa-tools-pack-npm-winccoa-core:npm-winccoa-core"
-  },
   "engines": {
     "node": ">=20"
   }
