@@ -25,9 +25,15 @@ Workflow: `.github/workflows/ci-cd.yml`
 
 ### Integration Tests - WinCC OA
 
-Integration tests are part of the CI/CD workflow.
+IMPORTANT: The heavy `integration-winccoa` job that ran WinCC OA inside a
+Docker container has been removed from the repository CI workflow. Registration
+and unregistration behavior is now validated in the core package
+`@winccoa-tools-pack/npm-winccoa-core`. Use local/manual runs for full
+integration verification (see "Manual runs" below).
 
-Workflow: `.github/workflows/ci-cd.yml` (job: `Integration Tests - WinCC OA`)
+Integration tests are part of the CI/CD workflow when run manually or locally.
+
+Workflow: `.github/workflows/ci-cd.yml` (previously: job `Integration Tests - WinCC OA`)
 
 - Triggers:
   - same triggers as `CI/CD Pipeline`
