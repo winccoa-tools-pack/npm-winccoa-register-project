@@ -39,7 +39,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Add patch label
-        if: ${{ startsWith(github.actor, 'dependabot') && steps.metadata.outputs['update-type'] == 'version-update:semver-patch' }}
+        if: ${{ startsWith(github.actor, 'dependabot') && (steps.metadata.outputs['update-type'] == 'version-update:semver-patch' || steps.metadata.outputs['update-type'] == 'version-update:semver-minor') }}
         run: gh pr edit "$PR_URL" --add-label "dependabot/patch"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
@@ -60,14 +60,14 @@ jobs:
           echo "  directory=${{ steps.metadata.outputs['directory'] }}"
 
       - name: Approve Dependabot patch PR
-        if: ${{ steps.metadata.outputs['update-type'] == 'version-update:semver-patch' }}
+        if: ${{ steps.metadata.outputs['update-type'] == 'version-update:semver-patch' || steps.metadata.outputs['update-type'] == 'version-update:semver-minor' }}
         run: gh pr review --approve "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Enable auto-merge (squash) for patch updates
-        if: ${{ steps.metadata.outputs['update-type'] == 'version-update:semver-patch' }}
+        if: ${{ steps.metadata.outputs['update-type'] == 'version-update:semver-patch' || steps.metadata.outputs['update-type'] == 'version-update:semver-minor' }}
         run: gh pr merge --auto --squash "$PR_URL"
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
