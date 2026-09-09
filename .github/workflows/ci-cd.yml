@@ -117,8 +117,7 @@ jobs:
             "test:${{ needs.test.result }}"
           )
           echo "Job results:"
-          printf ' - %s
-          ' "${RESULTS[@]}"
+          printf ' - %s\n' "${RESULTS[@]}"
           FAIL=0
           for r in "${RESULTS[@]}"; do
             status="${r#*:}"

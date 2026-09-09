@@ -1,4 +1,4 @@
-# Security Policy — winccoa-pa-register
+# Security Policy
 
 If you discover a security vulnerability in any project within the WinCC OA Tools Pack, thank you for reporting it responsibly.
 
