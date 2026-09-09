@@ -1,4 +1,4 @@
-# GitHub Discussions Guide — winccoa-pa-register
+# GitHub Discussions Guide
 
 Welcome to the community discussions!
 

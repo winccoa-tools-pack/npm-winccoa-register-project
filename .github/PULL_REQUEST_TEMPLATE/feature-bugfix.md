@@ -1,4 +1,4 @@
-# Feature / Bugfix Pull Request — winccoa-pa-register
+# Feature / Bugfix Pull Request
 
 ## 📋 Description
 

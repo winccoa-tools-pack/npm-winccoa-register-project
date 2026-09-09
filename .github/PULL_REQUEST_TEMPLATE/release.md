@@ -1,4 +1,4 @@
-# Release / Hotfix Pull Request — winccoa-pa-register
+# Release / Hotfix Pull Request
 
 ## 🌳 Branch Type
 
