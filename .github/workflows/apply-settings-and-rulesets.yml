@@ -161,21 +161,7 @@ jobs:
 
           # If repository.settings.yml contains an actions_permissions block, generate payload and apply
           if [ -f .github/repository.settings.yml ]; then
-            python3 - <<'PY'
-            import yaml, json, sys
-            cfg = yaml.safe_load(open('.github/repository.settings.yml','r',encoding='utf-8')) or {}
-            ap = cfg.get('actions_permissions')
-            if ap:
-              out = {}
-              if 'enabled' in ap:
-                out['enabled'] = bool(ap['enabled'])
-              if 'allowed_actions' in ap:
-                out['allowed_actions'] = ap['allowed_actions']
-              if isinstance(ap.get('selected_actions'), dict) and 'apps' in ap.get('selected_actions'):
-                out['selected_actions'] = {'apps': ap['selected_actions']['apps']}
-              json.dump(out, open('actions_payload.json','w'), ensure_ascii=False)
-              print('WROTE actions_payload.json')
-              PY
+            python3 .github/scripts/generate_actions_payload.py
 
             if [ -f actions_payload.json ]; then
               echo "Current Actions permissions for $OWNER/$NAME:" || true
