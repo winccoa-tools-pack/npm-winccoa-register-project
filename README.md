@@ -137,3 +137,24 @@ CLI flags:
 Small, focused contributions welcome. Open issues describing the desired behavior and include reproduction steps.
 
 Made with ❤️ for and by the WinCC OA community
+
+## Release process & required secrets
+
+- The release pipeline runs two phases: a **pre-release** (creates a prerelease tag and artifact) and a **release** (consumes the prerelease artifact and publishes a formal release and npm package).
+- For `release` to succeed the prerelease tag (e.g. `v1.0.0-<sha>`) must exist. Run the prerelease workflow for the intended branch first (see `.github/workflows/pre-release.yml`).
+- Required repository secrets:
+  - `GITHUB_TOKEN` (Actions-provided) — used for API calls and tag creation. For pushes protected by branch rules you may need an admin PAT exposed as `REPO_ADMIN_TOKEN` in workflows.
+  - `NPM_TOKEN` — required to publish to npm when `publish_to_npm: true`.
+
+Quick command to trigger a prerelease for `release/v1.0.0`:
+
+```bash
+gh workflow run pre-release.yml \
+  --repo winccoa-tools-pack/npm-winccoa-register-project \
+  --ref release/v1.0.0 \
+  --field pre_release_type=alpha
+```
+
+After the prerelease run completes and a prerelease tag appears, re-run the `Release` workflow or wait for it to be triggered automatically by your CI flow.
+
+If you need help triggering or validating the prerelease run, I can run it and follow the logs for you.
