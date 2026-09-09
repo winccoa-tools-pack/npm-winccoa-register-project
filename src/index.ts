@@ -105,7 +105,12 @@ function parseArgs(argv: string[]): Opts {
                 opts[key] = 'true';
                 continue;
             }
-            opts[key] = next;
+            // If option supports multiple values (we initialize arrays above), push
+            if (Array.isArray(opts[key])) {
+                (opts[key] as string[]).push(next);
+            } else {
+                opts[key] = next;
+            }
             i++;
         }
     }
