@@ -142,6 +142,27 @@ node dist/cjs/index.js --project-path /tmp/my-main --runnable true \
 node dist/cjs/index.js --project-path /tmp/my-main --runnable true \
   --langs en_US.utf8 --simulation-rc=0 --simulated-winccoa-versions 3.21 \
   --sub-project registered-subproject-id
+
+Windows example (what I ran):
+
+```powershell
+node dist/src/cli.js --project-path C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures/projects/runnable \
+  --sub-project TestFramework_3.21 \
+  --sub-project "C:\\ws\\winccoa-tools-pack\\npm-winccoa-register-project\\test\\fixtures\\projects\\sub-proj" \
+  --wincc-oa-version 3.21 --langs de_AT.utf8
+```
+
+Resulting `config` content written to `[project]/config/config`:
+
+```ini
+[general]
+pvss_path = "C:/Program Files/Siemens/WinCC_OA/3.21"
+proj_path = "C:/Program Files/Siemens/WinCC_OA/3.21/TestFramework_3.21"
+proj_path = "C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures/projects/sub-proj"
+proj_path = "C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures/projects/runnable"
+proj_version = "3.21"
+langs = "de_AT.utf8"
+```
 ```
 
 Notes:
