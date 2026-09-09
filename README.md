@@ -145,7 +145,7 @@ node dist/cjs/index.js --project-path /tmp/my-main --runnable true \
 
 Windows example (what I ran):
 
-```powershell
+```gitbash
 node dist/src/cli.js --project-path C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures/projects/runnable \
   --sub-project TestFramework_3.21 \
   --sub-project "C:\\ws\\winccoa-tools-pack\\npm-winccoa-register-project\\test\\fixtures\\projects\\sub-proj" \
@@ -162,7 +162,6 @@ proj_path = "C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures
 proj_path = "C:/ws/winccoa-tools-pack/npm-winccoa-register-project/test/fixtures/projects/runnable"
 proj_version = "3.21"
 langs = "de_AT.utf8"
-```
 ```
 
 Notes:
