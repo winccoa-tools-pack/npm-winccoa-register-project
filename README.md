@@ -121,7 +121,7 @@ CLI flags:
 - `--langs <csv|space-separated>`: Languages to configure for runnable projects (e.g. `de_AT.utf8,en_US.utf8`). Required when registering a runnable project.
 - `--wincc-oa-version <version>`: Optional WinCC OA version (e.g. `3.20`). When omitted, the CLI will attempt to auto-detect if `@winccoa-tools-pack/npm-winccoa-core` is available and a single WinCC OA installation is present.
 - `--unregister`: Unregister the project from the environment instead of registering it.
- - `--sub-project <path|id>`: Add a sub-project to be included in the generated `config`. Can be used multiple times to add several sub-projects. Paths are normalized to Unix-style in the config.
+- `--sub-project <path|id>`: Add a sub-project to be included in the generated `config`. Can be used multiple times to add several sub-projects. Paths are normalized to Unix-style in the config.
 
 ### Sub-projects
 
