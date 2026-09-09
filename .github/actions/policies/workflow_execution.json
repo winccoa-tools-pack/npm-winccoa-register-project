@@ -3,7 +3,7 @@
   "name": "workflow_execution",
   "target": "actions",
   "source_type": "Repository",
-  "source": "winccoa-tools-pack/template-npm-shared-library",
+  "source": "winccoa-tools-pack/npm-winccoa-register-project",
   "enforcement": "active",
   "conditions": {},
   "rules": [],
