@@ -6,13 +6,14 @@ import {
     getWinCCOAInstallationPathByVersion,
 } from '@winccoa-tools-pack/npm-winccoa-core';
 
-type Opts = Record<string, string | boolean>;
+type Opts = Record<string, string | boolean | string[]>;
 
 class ProjEnvProjectMock {
     private _dir: string = '';
     private _version: string = '';
     private _runnable: boolean = true;
     private _langs: string[] = [];
+    private _id: string | undefined;
 
     setDir(dir: string): void {
         this._dir = dir;
@@ -28,6 +29,23 @@ class ProjEnvProjectMock {
 
     setLanguages(langs: string[]): void {
         this._langs = langs;
+    }
+
+    setId(id: string): void {
+        this._id = id;
+    }
+
+    getDir(): string {
+        return this._dir;
+    }
+
+    isRunnable(): boolean {
+        return this._runnable;
+    }
+
+    isRegistered(): boolean {
+        // For mock: treat items with an id as registered, otherwise if dir exists treat as registered
+        return !!this._id || !!this._dir;
     }
 
     async registerProj(): Promise<number> {
@@ -68,8 +86,18 @@ function parseArgs(argv: string[]): Opts {
         if (a.startsWith('--')) {
             const [k, v] = a.split('=');
             const key = k.replace(/^--/, '');
+
+            if (key === 'sub-project') {
+                if (opts[key] === undefined) {
+                    opts[key] = [];
+                }
+            }
             if (v !== undefined) {
-                opts[key] = v;
+                if (Array.isArray(opts[key])) {
+                    (opts[key] as string[]).push(v);
+                } else {
+                    opts[key] = v;
+                }
                 continue;
             }
             const next = args[i + 1];
@@ -77,7 +105,12 @@ function parseArgs(argv: string[]): Opts {
                 opts[key] = 'true';
                 continue;
             }
-            opts[key] = next;
+            // If option supports multiple values (we initialize arrays above), push
+            if (Array.isArray(opts[key])) {
+                (opts[key] as string[]).push(next);
+            } else {
+                opts[key] = next;
+            }
             i++;
         }
     }
@@ -91,6 +124,7 @@ function usage(): void {
     console.log('  --runnable true|false        Whether the project is runnable (default: true)');
     console.log('  --langs <comma|space list>   Languages, e.g. "de_AT.utf8,en_US.utf8"');
     console.log('  --wincc-oa-version <ver>     WinCC OA version to use when registering');
+    console.log('  --sub-project <path|id>      Add a sub-project. Can be used multiple times');
     console.log('  --unregister                 Unregister the project instead of registering');
     console.log('  -h, --help                   Show this help message');
     console.log('\nExamples:');
@@ -233,8 +267,51 @@ export async function main(): Promise<void> {
                 const contentLines: string[] = [
                     '[general]',
                     `pvss_path = "${(oaPath ?? '').replace(/\\/g, '/')}"`,
-                    `proj_path = "${absProjectPath.replace(/\\/g, '/')}"`,
                 ];
+
+                if (opts['sub-project'] !== undefined) {
+                    const subProjects = opts['sub-project'] as string[];
+                    for (const subProjPathOrId of subProjects) {
+                        if (!subProjPathOrId) continue;
+
+                        const subProject: any =
+                            opts['simulated-winccoa-versions'] !== undefined
+                                ? new ProjEnvProjectMock()
+                                : new ProjEnvProject();
+
+                        if (fs.existsSync(subProjPathOrId)) {
+                            subProject.setDir(subProjPathOrId);
+                        } else {
+                            subProject.setId(subProjPathOrId);
+                        }
+
+                        const subProjPath = subProject.getDir();
+
+                        if (!subProjPath || !fs.existsSync(subProjPath)) {
+                            throw new Error(
+                                `Subproject path does not exist: ${subProjPathOrId}. Please provide a valid path or registered project ID.`,
+                            );
+                        }
+
+                        if (subProject.isRunnable()) {
+                            // adding runnable proejct as supbroject wiil works, but looks like a user failure.
+                            // This is not common scenario, so we will just warn the user and continue.
+                            console.warn(
+                                `Warning: Subproject ${subProjPathOrId} is marked as runnable. Adding a runnable project as a subproject may not be intended.`,
+                            );
+                        }
+                        if (!subProject.isRegistered()) {
+                            // again, this is not a common scenario, so we will just warn the user and continue.
+                            // unregistered subprojects will work, but it is recommended to register subprojects before using them as subprojects.
+                            console.warn(
+                                `Warning: Subproject ${subProjPathOrId} is not registered. Ensure it is registered before using it as a subproject.`,
+                            );
+                        }
+                        contentLines.push(`proj_path = "${subProjPath.replace(/\\/g, '/')}"`);
+                    }
+                }
+
+                contentLines.push(`proj_path = "${absProjectPath.replace(/\\/g, '/')}"`);
                 if (winccVersion) contentLines.push(`proj_version = "${winccVersion}"`);
                 if (langs.length) contentLines.push(`langs = "${langs.join(' ')}"`);
                 const content = contentLines.join('\n');
