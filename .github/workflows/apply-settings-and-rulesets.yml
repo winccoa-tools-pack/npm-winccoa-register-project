@@ -92,8 +92,14 @@ jobs:
           if [ -d .github/actions/policies ]; then
             for f in .github/actions/policies/*.json; do
               [ -e "$f" ] || continue
-              cp "$f" ruleset_payloads/ || true
-              found=true
+              # Only include policies with a ruleset-compatible target
+              t=$(jq -r '.target // empty' "$f" 2>/dev/null || true)
+              if [ "$t" = "branch" ] || [ "$t" = "tag" ] || [ "$t" = "push" ]; then
+                cp "$f" ruleset_payloads/ || true
+                found=true
+              else
+                echo "Skipping $f (unsupported target: $t)"
+              fi
             done
           fi
           if [ "$found" = true ]; then
