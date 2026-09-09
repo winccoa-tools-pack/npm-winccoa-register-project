@@ -1,6 +1,6 @@
 {
   "name": "@winccoa-tools-pack/npm-winccoa-register-project",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI to create WinCC OA project config file and (un)register projects",
   "author": "winccoa-tools-pack",
   "license": "MIT",
