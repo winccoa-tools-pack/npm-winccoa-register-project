@@ -266,7 +266,7 @@ export async function main(): Promise<void> {
             if (!fs.existsSync(cfgPath)) {
                 const contentLines: string[] = [
                     '[general]',
-                    `pvss_path = "${(oaPath ?? '').replace(/\\/g, '/')}"`
+                    `pvss_path = "${(oaPath ?? '').replace(/\\/g, '/')}"`,
                 ];
 
                 if (opts['sub-project'] !== undefined) {
@@ -310,7 +310,6 @@ export async function main(): Promise<void> {
                         contentLines.push(`proj_path = "${subProjPath.replace(/\\/g, '/')}"`);
                     }
                 }
-                
                 contentLines.push(`proj_path = "${absProjectPath.replace(/\\/g, '/')}"`);
                 if (winccVersion) contentLines.push(`proj_version = "${winccVersion}"`);
                 if (langs.length) contentLines.push(`langs = "${langs.join(' ')}"`);
