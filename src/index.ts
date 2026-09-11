@@ -186,8 +186,8 @@ export async function main(): Promise<void> {
     console.log('WinCC OA version:', opts['wincc-oa-version'] || '(not specified)');
     console.log('Available WinCC OA versions:', installedWinCCOAVersions.join(', ') || '(none)');
     if (installedWinCCOAVersions.length === 0) {
-        throw new Error(
-            'Could not determine installed version of WinCC OA; programmatic registration may fail',
+        console.warn(
+            'Warning: Could not determine installed version of WinCC OA; continuing. Programmatic registration may fail.',
         );
     }
 
