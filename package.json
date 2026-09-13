@@ -25,7 +25,7 @@
     }
   },
   "bin": {
-    "npm-winccoa-register": "src/index.js"
+    "npm-winccoa-register": "dist/cjs/cli.js"
   },
   "files": [
     "dist"
