@@ -98,6 +98,19 @@ jobs:
         env:
           CI: true
 
+  # Integration tests are manual until a working Docker setup exists (winccoa-tools-pack/.github#117).
+  # This job only reminds PR authors; it never fails the pipeline.
+  limited-tests-notice:
+    name: Limited tests notice
+    needs: [test]
+    if: ${{ needs.test.result == 'success' }}
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: winccoa-tools-pack/.github/.github/workflows/reusable-limited-tests-notice.yml@main
+    with:
+      integration_command: npm run test:integration
+
   required:
     name: CI/CD Pipeline - Required
     runs-on: ubuntu-latest
