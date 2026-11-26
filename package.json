@@ -1,6 +1,6 @@
 {
   "name": "@winccoa-tools-pack/npm-winccoa-register-project",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "CLI to create WinCC OA project config file and (un)register projects",
   "author": "winccoa-tools-pack",
   "license": "MIT",
@@ -61,13 +61,16 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
     "globals": "^17.12.0",
-    "markdownlint": "^0.41.1",
-    "markdownlint-cli": "^0.49.1",
+    "markdownlint": "^0.42.0",
+    "markdownlint-cli": "^0.50.0",
     "prettier": "^3.9.6",
     "ts-node": "^10.9.1",
     "tsx": "^4.23.13",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.68.0"
+  },
+  "overrides": {
+    "katex": "^0.18.2"
   },
   "engines": {
     "node": ">=22"

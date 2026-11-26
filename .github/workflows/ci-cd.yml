@@ -78,6 +78,12 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
+# you can add more Node.js versions to the matrix if you want to test against multiple versions,
+# but keep in mind that the more versions you add, the longer the CI/CD pipeline will take to complete.
+# which may not be ideal for PRs that require quick feedback.
+# It may also provide costs for GitHub Actions minutes if you are on a paid plan, so be mindful of that.
+#        node-version: [22.x, 24.x, 26.x]
+# therefore I will provide tests only for current node version 
         node-version: [26.x]
     env:
       CI: true
@@ -97,6 +103,19 @@ jobs:
         run: npm run test:unit
         env:
           CI: true
+
+  # Integration tests are manual until a working Docker setup exists (winccoa-tools-pack/.github#117).
+  # This job only reminds PR authors; it never fails the pipeline.
+  limited-tests-notice:
+    name: Limited tests notice
+    needs: [test]
+    if: ${{ needs.test.result == 'success' }}
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: winccoa-tools-pack/.github/.github/workflows/reusable-limited-tests-notice.yml@main
+    with:
+      integration_command: npm run test:integration
 
   required:
     name: CI/CD Pipeline - Required

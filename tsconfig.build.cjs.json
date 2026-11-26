@@ -6,8 +6,7 @@
     "declaration": false,
     "sourceMap": true,
     "outDir": "dist/cjs",
-    "rootDir": "src",
-    "downlevelIteration": true
+    "rootDir": "src"
   },
   "include": ["src/**/*"]
 }

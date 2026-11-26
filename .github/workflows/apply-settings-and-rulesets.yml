@@ -177,6 +177,16 @@ jobs:
             else
               echo "No actions_permissions block found in .github/repository.settings.yml; skipping."
             fi
+
+            # If workflow-level permissions payload was generated, apply it
+            if [ -f workflow_payload.json ]; then
+              echo "Current workflow permissions for $OWNER/$NAME:" || true
+              gh api -H "Accept: application/vnd.github+json" "repos/$OWNER/$NAME/actions/permissions/workflow" || true
+              echo "Applying workflow permissions from workflow_payload.json"
+              gh api --method PUT -H "Accept: application/vnd.github+json" "repos/$OWNER/$NAME/actions/permissions/workflow" --input workflow_payload.json || true
+            else
+              echo "No workflow_permissions block found in .github/repository.settings.yml; skipping."
+            fi
           fi
 
           if jq -e 'type=="array"' topics.json >/dev/null; then
