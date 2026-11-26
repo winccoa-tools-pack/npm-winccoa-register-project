@@ -69,6 +69,9 @@
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.68.0"
   },
+  "overrides": {
+    "katex": "^0.18.2"
+  },
   "engines": {
     "node": ">=22"
   }
